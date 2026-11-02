@@ -11,11 +11,14 @@ import OrderForm from './pages/OrderForm.jsx';
 import Orders from './pages/Orders.jsx';
 
 function Protected({ children }) {
-  const { user, ready } = useAuth();
+  const { user, ready, loggedOut } = useAuth();
   const location = useLocation();
   if (!ready) return <p className="loading-screen">Wczytywanie panelu…</p>;
   if (!user) {
-    return <Navigate to="/logowanie" replace state={{ from: location.pathname + location.search }} />;
+    // After an expired session the same person returns to their page. After logging out,
+    // the next person to log in starts on the dashboard.
+    const state = loggedOut ? null : { from: location.pathname + location.search };
+    return <Navigate to="/logowanie" replace state={state} />;
   }
   return children;
 }

@@ -1,17 +1,10 @@
-import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom';
+import { Link, NavLink, Outlet } from 'react-router-dom';
 import { ROLE_LABELS } from '../../../shared/statuses.js';
 import { isDemo } from '../api/index.js';
 import { useAuth } from '../lib/auth.jsx';
 
 export default function Layout() {
   const { user, logout } = useAuth();
-  const navigate = useNavigate();
-
-  // Clears the remembered page, so the next person to log in starts on the dashboard.
-  async function handleLogout() {
-    await logout();
-    navigate('/logowanie', { replace: true });
-  }
 
   return (
     <div className="layout">
@@ -37,7 +30,7 @@ export default function Layout() {
             {user.name}
             <small>{ROLE_LABELS[user.role]}</small>
           </span>
-          <button type="button" className="rail-logout" onClick={handleLogout}>
+          <button type="button" className="rail-logout" onClick={logout}>
             Wyloguj
           </button>
         </div>

@@ -5,11 +5,7 @@ import { STATUS_KEYS } from './statuses.js';
 const tooLong = (max) => `Wpisz najwyżej ${max} znaków.`;
 
 const requiredText = (max, message) =>
-  z
-    .string({ required_error: message, invalid_type_error: message })
-    .trim()
-    .min(1, message)
-    .max(max, tooLong(max));
+  z.string({ error: message }).trim().min(1, message).max(max, tooLong(max));
 
 const optionalText = (max) =>
   z
@@ -40,16 +36,13 @@ export const clientSchema = z.object({
 });
 
 export const orderSchema = z.object({
-  clientId: z
-    .number({ required_error: 'Wybierz klienta.', invalid_type_error: 'Wybierz klienta.' })
-    .int()
-    .positive('Wybierz klienta.'),
+  clientId: z.number({ error: 'Wybierz klienta.' }).int().positive('Wybierz klienta.'),
   assigneeId: z.number().int().positive().nullable().default(null),
   device: requiredText(120, 'Podaj urządzenie.'),
   problem: requiredText(2000, 'Opisz usterkę lub usługę.'),
   dueDate: z.string().refine(isValidDay, 'Wybierz poprawny termin.').nullable().default(null),
   priceCents: z
-    .number({ required_error: 'Podaj cenę.', invalid_type_error: 'Podaj cenę, np. 450,00.' })
+    .number({ error: (issue) => (issue.input === undefined ? 'Podaj cenę.' : 'Podaj cenę, np. 450,00.') })
     .int()
     .min(0, 'Cena nie może być ujemna.')
     .max(100_000_000, 'Ta cena jest za wysoka.'),
@@ -57,7 +50,7 @@ export const orderSchema = z.object({
 });
 
 export const statusChangeSchema = z.object({
-  status: z.enum(STATUS_KEYS, { errorMap: () => ({ message: 'Wybierz status.' }) }),
+  status: z.enum(STATUS_KEYS, { error: 'Wybierz status.' }),
   note: optionalText(1000),
 });
 
