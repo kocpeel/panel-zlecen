@@ -1,0 +1,39 @@
+{
+  "name": "panel-zlecen",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Demonstracyjny panel zleceń dla małej firmy serwisowej: React, Node.js i SQLite.",
+  "engines": {
+    "node": ">=22.9"
+  },
+  "scripts": {
+    "dev": "concurrently -n api,web \"npm:dev:api\" \"npm:dev:web\"",
+    "dev:api": "node --env-file-if-exists=.env --watch server/index.js",
+    "dev:web": "vite --config client/vite.config.js",
+    "build": "vite build --config client/vite.config.js",
+    "build:demo": "vite build --config client/vite.config.js --mode demo",
+    "start": "node --env-file-if-exists=.env server/index.js",
+    "seed": "node --env-file-if-exists=.env server/seed.js",
+    "test": "node --test \"tests/*.test.js\"",
+    "e2e": "node e2e/smoke.mjs"
+  },
+  "dependencies": {
+    "better-sqlite3": "^13.0.3",
+    "cookie-parser": "^1.4.7",
+    "express": "^4.22.3",
+    "express-rate-limit": "^8.7.2",
+    "helmet": "^8.3.0",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.7.0",
+    "concurrently": "^9.2.5",
+    "playwright-core": "^1.64.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.30.6",
+    "vite": "^6.4.5",
+    "vite-plugin-singlefile": "^2.3.4"
+  }
+}
