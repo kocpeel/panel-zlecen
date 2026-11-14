@@ -4,6 +4,8 @@ Aplikacja webowa do prowadzenia zleceń w małej firmie serwisowej: przyjęcie z
 
 To projekt demonstracyjny. Firma i dane są fikcyjne, a aplikacja nie jest wdrożeniem u klienta.
 
+**Demo:** [kocpeel.github.io/panel-zlecen](https://kocpeel.github.io/panel-zlecen/). Działa w przeglądarce bez serwera, a zmiany znikają po odświeżeniu.
+
 ![Pulpit](docs/pulpit.png)
 
 ## Co potrafi
